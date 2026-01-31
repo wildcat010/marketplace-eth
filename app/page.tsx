@@ -18,7 +18,7 @@ export default function Home() {
           {/*------ NAVBAR STARTS ------*/}
           <Navbar></Navbar>
           {/*------ NAVBAR ENDS ------*/}
-          <div className="fit">
+          <div>
             {/*------ HERO STARTS ------*/}
             <Hero></Hero>
             {/*------ HERO ENDS ------*/}
@@ -32,7 +32,7 @@ export default function Home() {
             {/*------ ADDRESS ENDS ------*/}
 
             {/*------ CURRENCY STARTS ------*/}
-            <EthRates></EthRates>
+
             {/*------ CURRENCY ENDS ------*/}
 
             {/*------ ORDER INFO STARTS ------*/}

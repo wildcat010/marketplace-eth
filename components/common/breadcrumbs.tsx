@@ -1,17 +1,29 @@
 export default function Breadcrumps() {
   return (
-    <nav aria-label="breadcrumb" className="mb-4">
-      <ol className="flex leading-none text-indigo-600 divide-x divide-indigo-400">
-        <li className="pr-4">
-          <a href="#">Buy</a>
-        </li>
-        <li className="px-4">
-          <a href="#">My Orders</a>
-        </li>
-        <li className="px-4">
-          <a href="#">All Orders</a>
-        </li>
-      </ol>
-    </nav>
+    <div className="flex justify-center my-6">
+      <div
+        className="inline-flex rounded-base shadow-xs -space-x-px"
+        role="group"
+      >
+        <button
+          type="button"
+          className="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-s-base text-sm px-3 py-2 focus:outline-none"
+        >
+          Buy
+        </button>
+        <button
+          type="button"
+          className="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 text-sm px-3 py-2 focus:outline-none"
+        >
+          My Orders
+        </button>
+        <button
+          type="button"
+          className="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-3 focus:ring-neutral-tertiary-soft font-medium leading-5 rounded-e-base text-sm px-3 py-2 focus:outline-none"
+        >
+          All Orders
+        </button>
+      </div>
+    </div>
   );
 }

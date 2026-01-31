@@ -1,8 +1,17 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "flowbite/src/themes/default"; /* optional but fine */
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a; /* dark black */
+  --foreground: #ffffff; /* white text */
 }
 
 @theme inline {
@@ -15,8 +24,15 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #2b064d;
   }
+}
+
+/* Make all Flowbite cards dark */
+.bg-white {
+  background-color: #0a0a0a !important;
+  color: #ffffff;
+  border-color: #2b064d; /* optional border color */
 }
 
 body {

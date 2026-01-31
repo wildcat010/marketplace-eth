@@ -1,17 +1,37 @@
 export default function Footer() {
   return (
-    <div>
-      <footer className="bg-gray-900 pt-1">
-        <div className="container mx-auto px-6">
-          <div className="mt-5 flex flex-col items-center">
-            <div className="py-6">
-              <p className="mb-6 text-white text-sm text-primary-2 font-bold">
-                © {new Date().getFullYear()} Eincode
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <footer className="bg-neutral-primary-soft rounded-base shadow-xs border border-default m-4">
+      <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <span className="text-sm text-body sm:text-center">
+          © 2023{" "}
+          <a href="https://flowbite.com/" className="hover:underline">
+            Flowbite™
+          </a>
+          . All Rights Reserved.
+        </span>
+        <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
+          <li>
+            <a href="#" className="hover:underline me-4 md:me-6">
+              About
+            </a>
+          </li>
+          <li>
+            <a href="#" className="hover:underline me-4 md:me-6">
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a href="#" className="hover:underline me-4 md:me-6">
+              Licensing
+            </a>
+          </li>
+          <li>
+            <a href="#" className="hover:underline">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+    </footer>
   );
 }

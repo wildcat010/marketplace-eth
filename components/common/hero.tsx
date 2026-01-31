@@ -1,21 +1,44 @@
 export default function Hero() {
   return (
-    <section className="lg:2/6 text-left my-28">
-      <div className="text-6xl font-semibold text-gray-900 leading-none">
-        Grow your career as a developer
-      </div>
-      <div className="mt-6 text-xl font-light text-true-gray-500 antialiased text-black">
-        Learn programming and web development the easy way! Get unlimited access
-        to all of our courses.
-      </div>
-      <div className="mt-5 sm:mt-8 flex lg:justify-start">
-        <div className="rounded-md shadow">
-          <a
-            href="#"
-            className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+    <section className="bg-neutral-primary">
+      <div className="py-8 px-4 mx-auto max-w-screen-2xl text-center lg:py-16">
+        <h1 className="mb-6 text-4xl font-bold tracking-tighter text-heading md:text-5xl lg:text-6xl">
+          Courses
+        </h1>
+        <p className="mb-8 text-base font-normal text-body md:text-xl">
+          {" "}
+          Grow your career as a developer.
+        </p>
+        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 md:space-x-4">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded-base text-base px-5 py-3 focus:outline-none"
           >
-            Get started
-          </a>
+            Getting started
+            <svg
+              className="w-4 h-4 ms-1.5 -me-0.5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 12H5m14 0-4 4m4-4-4-4"
+              />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-3 focus:outline-none"
+          >
+            Learn more
+          </button>
         </div>
       </div>
     </section>
