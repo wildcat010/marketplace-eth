@@ -8,7 +8,7 @@ export default function Navbar() {
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img src="./globe.svg" className="h-7" alt="Logo" />
+          <img src="/globe.svg" className="h-7" alt="Logo" />
           <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
             Flowbite
           </span>
@@ -32,9 +32,10 @@ export default function Navbar() {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="2"
-              d="M5 7h14M5 12h14M5 17h14"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 12h14M5 12l4-4m-4 4 4 4"
             />
           </svg>
         </button>

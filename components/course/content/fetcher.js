@@ -1,4 +1,4 @@
-import courses from "./inde.json"
+import courses from "./index.json"
 
 export const getAllCourse = () =>{
     return {

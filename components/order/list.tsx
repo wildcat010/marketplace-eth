@@ -1,17 +1,17 @@
-export default function List() {
+export default function List({ courses }) {
   return (
     <div className="flex justify-center">
       <section className="grid grid-cols-2 gap-4 mb-5">
-        {Array.from({ length: 4 }).map((_, i) => (
+        {courses.map((course) => (
           <div
-            key={i}
+            key={course.id}
             className="bg-neutral-primary-soft block max-w-sm border border-default rounded-base shadow-xs"
           >
             <a href="#">
               <img
                 className="rounded-t-base"
-                src="/docs/images/blog/image-1.jpg"
-                alt=""
+                src={course.coverImage}
+                alt={course.title}
               />
             </a>
             <div className="p-6 text-center">
@@ -20,7 +20,7 @@ export default function List() {
               </span>
               <a href="#">
                 <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-heading">
-                  Streamlining your design process today.
+                  {course.title}
                 </h5>
               </a>
               <a

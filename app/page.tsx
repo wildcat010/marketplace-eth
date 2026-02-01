@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "@components/common/navbar";
 import Footer from "@components/common/footer";
 
@@ -10,7 +12,13 @@ import EthRates from "@components/web3/ethRates";
 import Card from "@components/order/card";
 import List from "@components/order/list";
 
+import { getAllCourse } from "@components/course/content/fetcher";
+
+import React, { useEffect, useState } from "react";
+
 export default function Home() {
+  const { data, courseMap } = getAllCourse();
+
   return (
     <>
       {/*------ HERO STARTS ------*/}
@@ -34,7 +42,7 @@ export default function Home() {
       {/*------ ORDER INFO ENDS ------*/}
 
       {/*------ COURSE CARD STARTS ------*/}
-      <List></List>
+      <List courses={data}></List>
       {/*------ COURSE CARD ENDS ------*/}
     </>
   );
