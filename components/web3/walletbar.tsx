@@ -1,6 +1,6 @@
 export default function Walletbar() {
   return (
-    <div className="w-full text-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
+    <div className="w-full text-center bg-neutral-primary-soft p-6 py-[10px] border border-default rounded-base shadow-xs my-6">
       <h5 className="mb-3 text-2xl tracking-tight font-semibold text-heading">
         0xd9D5cD41Fe921A743F2b5Fe71CC3070F5C176208
       </h5>
