@@ -16,8 +16,14 @@ import { getAllCourse } from "@components/course/content/fetcher";
 
 import React, { useEffect, useState } from "react";
 
+import { useWeb3 } from "@components/provider/web3";
+
 export default function Home() {
   const { data, courseMap } = getAllCourse();
+
+  const w3 = useWeb3();
+
+  console.log("web3", w3);
 
   return (
     <>
