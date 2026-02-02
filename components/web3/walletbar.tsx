@@ -1,10 +1,27 @@
+import { useWeb3 } from "@components/provider/web3";
+
 export default function Walletbar() {
+  const { connect, accounts, balance } = useWeb3();
+
+  const hasAccount =
+    Array.isArray(accounts) && accounts.length > 0 && accounts[0];
+
   return (
     <div className="w-full text-center bg-neutral-primary-soft p-6 py-[10px] border border-default rounded-base shadow-xs my-6">
-      <h5 className="mb-3 text-2xl tracking-tight font-semibold text-heading">
-        0xd9D5cD41Fe921A743F2b5Fe71CC3070F5C176208
-      </h5>
-      <p className="mb-6 text-base text-body sm:text-lg">Hello, user</p>
+      {hasAccount ? (
+        <h5 className="mb-3 text-2xl tracking-tight font-semibold text-heading">
+          {accounts[0]}
+        </h5>
+      ) : (
+        <button
+          onClick={connect}
+          type="button"
+          className="text-white mb-6 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5"
+        >
+          Connect Metamask Wallet
+        </button>
+      )}
+
       <div className="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
         <a
           href="#"
@@ -20,7 +37,7 @@ export default function Walletbar() {
           </svg>
           <div className="text-left rtl:text-right">
             <div className="text-xs">ETH</div>
-            <div className="text-sm font-bold">3145.1$</div>
+            <div className="text-sm font-bold">{balance}</div>
           </div>
         </a>
         <a

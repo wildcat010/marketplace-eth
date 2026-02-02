@@ -1,30 +1,72 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 "use client";
 
-import { createContext, useContext,useEffect, useState } from "react";
-import { initializeProvider } from '@metamask/providers';
+import { createContext, useContext,useEffect, useState, useMemo } from "react";
+import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3"
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 
 const Web3Context = createContext(null)
 
 export default function Web3Provider({children}) {
-    const [web3Api, setWeb3Api] = useState({})
+    const [web3Api, setWeb3Api] = useState({
+        provider:null,web3:null,contract: null,isLoading:true
+    })
+
+    const [accounts, setAccounts] = useState([]);
+    const [balance, setBalance] = useState(0);
 
     useEffect(() =>{
         const loadProvider = async() =>{
             const provider = await detectEthereumProvider();
             if(provider){
+                const web3 = new Web3(provider);
+                setWeb3Api({provider,web3,contract: null,isLoading:false})
                 console.log("provider find")
 
             }else{
-                console.log("provider not find")
+                const provider = new HDWalletProvider({
+                privateKeys: [
+                  "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
+                ],
+                providerOrUrl:
+                  "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
+              });
+              web3 = new Web3(provider);
+                              setWeb3Api({provider,web3,contract: null,isLoading:false})
+                console.log("provider not find, load HDwalletProvider")
             }
         }
         loadProvider()  
     },[]);
 
+  const _web3Api = useMemo(() => {
+    return {
+      ...web3Api,
+      accounts,
+      balance,
+      connect: web3Api.provider ?
+        async () => {
+          try {
+
+            const req = await web3Api.provider.request({method: "eth_requestAccounts"})
+        
+            const wei = await web3Api.web3.eth.getBalance(req[0]);
+              const eth = web3Api.web3.utils.fromWei(wei, "ether");
+              setBalance(eth);
+
+            setAccounts(req)
+          } catch {
+            location.reload()
+          }
+        } :
+        () => console.error("Cannot connect to Metamask, try to reload your browser please.")
+    }
+  },[web3Api,accounts,balance]);
+
   return (
-    <Web3Context.Provider value={{test: "Hello"}}>
+    <Web3Context.Provider value={_web3Api}>
       {children}
     </Web3Context.Provider>
   )

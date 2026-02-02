@@ -23,8 +23,6 @@ export default function Home() {
 
   const w3 = useWeb3();
 
-  console.log("web3", w3);
-
   return (
     <>
       {/*------ HERO STARTS ------*/}

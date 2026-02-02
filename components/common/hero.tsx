@@ -33,12 +33,6 @@ export default function Hero() {
               />
             </svg>
           </button>
-          <button
-            type="button"
-            className="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-3 focus:outline-none"
-          >
-            Learn more
-          </button>
         </div>
       </div>
     </section>
