@@ -6,6 +6,8 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3"
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
+import { setupHooks } from "./hooks/setupHooks";
+
 
 const Web3Context = createContext(null)
 
@@ -44,8 +46,10 @@ export default function Web3Provider({children}) {
   const _web3Api = useMemo(() => {
     return {
       ...web3Api,
+      hooks: setupHooks(web3Api.web3),
       accounts,
       balance,
+      
       connect: web3Api.provider ?
         async () => {
           try {
