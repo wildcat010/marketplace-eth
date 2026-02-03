@@ -1,17 +1,32 @@
+"use client";
 import { useWeb3 } from "@components/provider/web3";
-
+import { useEffect, useState } from "react";
 export default function Walletbar() {
-  const { connect, accounts, balance } = useWeb3();
-
   const { hooks } = useWeb3();
-  const { account } = hooks.useAccount();
+  const [acct, setAcct] = useState(null);
+  const [balance, setbalance] = useState(0);
 
-  const hasAccount =
-    Array.isArray(accounts) && accounts.length > 0 && accounts[0];
+  // const hasAccount =
+  //   Array.isArray(accounts) && accounts.length > 0 && accounts[0];
+
+  useEffect(() => {
+    const loadAccount = async () => {
+      if (!hooks.useAccount) return;
+
+      const result = await hooks.useAccount(); // call the async function
+
+      if (result?.account && result?.balance && result.account.length > 0) {
+        setAcct(result.account[0]); // store first address as string
+        setbalance(result.balance);
+      }
+    };
+
+    loadAccount();
+  }, [hooks.useAccount]);
 
   return (
-    <div className="w-full text-center bg-neutral-primary-soft p-6 py-[10px] border border-default rounded-base shadow-xs my-6">
-      {account}
+    <div className="w-full text-center bg-neutral-primary-soft p-6 py-[10px] border border-default rounded-base shadow-xs my-6 text-white">
+      {acct ? acct : "Loading ..."}
 
       <div className="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
         <a
