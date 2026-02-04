@@ -5,6 +5,7 @@ export default function Walletbar() {
   const { hooks } = useWeb3();
   const [acct, setAcct] = useState(null);
   const [balance, setbalance] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // const hasAccount =
   //   Array.isArray(accounts) && accounts.length > 0 && accounts[0];
@@ -18,6 +19,7 @@ export default function Walletbar() {
       if (result?.account && result?.balance && result.account.length > 0) {
         setAcct(result.account[0]); // store first address as string
         setbalance(result.balance);
+        setIsAdmin(result.isAdmin);
       }
     };
 
@@ -26,13 +28,11 @@ export default function Walletbar() {
 
   return (
     <div className="w-full text-center bg-neutral-primary-soft p-6 py-[10px] border border-default rounded-base shadow-xs my-6 text-white">
-      {acct ? acct : "Loading ..."}
+      <p>{isAdmin ? "Admin" : ""}</p>
+      <p>{acct ? acct : "Loading ..."}</p>
 
       <div className="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
-        <a
-          href="#"
-          className="w-full sm:w-auto bg-dark hover:bg-dark-strong focus:ring-4 focus:outline-none focus:ring-neutral-quaternary text-white rounded-base inline-flex items-center justify-center px-4 py-3"
-        >
+        <a className="w-full sm:w-auto bg-dark hover:bg-dark-strong focus:ring-4 focus:outline-none focus:ring-neutral-quaternary text-white rounded-base inline-flex items-center justify-center px-4 py-3">
           <svg
             className="w-7 h-7 me-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -46,10 +46,7 @@ export default function Walletbar() {
             <div className="text-sm font-bold">{balance}</div>
           </div>
         </a>
-        <a
-          href="#"
-          className="w-full sm:w-auto bg-dark hover:bg-dark-strong focus:ring-4 focus:outline-none focus:ring-neutral-quaternary text-white rounded-base inline-flex items-center justify-center px-4 py-3"
-        >
+        <a className="w-full sm:w-auto bg-dark hover:bg-dark-strong focus:ring-4 focus:outline-none focus:ring-neutral-quaternary text-white rounded-base inline-flex items-center justify-center px-4 py-3">
           <svg
             className="w-7 h-7 me-2"
             xmlns="http://www.w3.org/2000/svg"

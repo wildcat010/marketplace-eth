@@ -26,7 +26,6 @@ export default function Web3Provider({ children }) {
         const web3 = new Web3(provider);
         setWeb3Api({ provider, web3, contract: null, isLoading: false });
       } else {
-        console.log("provider not find, load HDwalletProvider", 1);
         const provider = new HDWalletProvider({
           privateKeys: [
             "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
@@ -43,7 +42,6 @@ export default function Web3Provider({ children }) {
           contract: null,
           isLoading: false,
         });
-        console.log("provider not find, load HDwalletProvider", 2);
       }
     };
     loadProvider();

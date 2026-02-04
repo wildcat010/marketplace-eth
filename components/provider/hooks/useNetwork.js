@@ -1,0 +1,40 @@
+const NETWORKS = {
+  1: "mainnet",
+  5: "goerli",
+  11155111: "sepolia",
+  137: "polygon",
+  80001: "mumbai",
+};
+
+const isValidNetwork = (networdId) => {
+  if (networdId.toString() == 11155111) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const useNetwork = (web3) => async () => {
+  if (!web3) {
+    return;
+  }
+  let req;
+  try {
+    if (web3.provider && web3.provider.request) {
+      req = await web3.provider.request({
+        method: "eth_chainId",
+      });
+    } else {
+      req = await web3.eth.net.getId();
+    }
+  } catch (err) {
+    console.error("connect error:", err);
+  }
+
+  if (req) {
+    return {
+      network: NETWORKS[req],
+      isValidNetwork: isValidNetwork(req),
+    };
+  }
+};
