@@ -22,14 +22,16 @@ export default function Modal({ isOpen }) {
                     className="text-lg leading-6 font-medium text-white"
                     id="modal-title"
                   >
-                    Deactivate account
+                    Course TITLE{" "}
+                    <span className="my-6 text-gray-500">author</span>
                   </h3>
+                  <div className="my-10">Course Image</div>
+                  <p className="my-6 text-gray-300">Description</p>
+
                   <div className="mt-2">
-                    <p className="text-sm text-gray-300">
-                      Are you sure you want to deactivate your account? All of
-                      your data will be permanently removed. This action cannot
-                      be undone.
-                    </p>
+                    <p className="text-sm text-gray-300">wsl</p>
+                    <p className="text-sm text-gray-300">wsl</p>
+                    <p className="text-sm text-gray-300">wsl</p>
                   </div>
                 </div>
               </div>
