@@ -10,6 +10,9 @@ const isAdmin = (address) => {
   }
 };
 
+const URL =
+  "https://api.coingecko.com/api/v3/coins/ethereum?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false";
+
 export const useAccount = (web3) => async () => {
   if (!web3) {
     return;
@@ -30,11 +33,15 @@ export const useAccount = (web3) => async () => {
     console.error("connect error:", err);
   }
 
+  const res = await fetch(URL);
+  const json = await res.json();
+
   if (req && req[0]) {
     return {
       account: req,
       balance: eth,
       isAdmin: isAdmin(web3.utils.keccak256(req[0])),
+      eth: json.market_data.current_price.usd ?? null,
     };
   }
 };

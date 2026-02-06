@@ -2,7 +2,8 @@ import Modal from "./modal";
 import { useEffect, useState } from "react";
 
 export default function List({ courses }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+
   return (
     <div className="flex justify-center">
       <section className="grid grid-cols-2 gap-4 mb-5">
@@ -27,7 +28,9 @@ export default function List({ courses }) {
               </h5>
 
               <button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  setSelectedCourse(course);
+                }}
                 type="button"
                 className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5"
               >
@@ -37,7 +40,10 @@ export default function List({ courses }) {
           </div>
         ))}
       </section>
-      <Modal isOpen={isOpen}></Modal>
+      <Modal
+        course={selectedCourse}
+        onClose={() => setSelectedCourse(null)}
+      ></Modal>
     </div>
   );
 }

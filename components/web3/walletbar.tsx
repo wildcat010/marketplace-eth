@@ -6,6 +6,7 @@ export default function Walletbar() {
   const [acct, setAcct] = useState(null);
   const [balance, setbalance] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [ethPrice, setethPrice] = useState(0);
 
   // const hasAccount =
   //   Array.isArray(accounts) && accounts.length > 0 && accounts[0];
@@ -17,6 +18,7 @@ export default function Walletbar() {
       const result = await hooks.useAccount(); // call the async function
 
       if (result?.account && result?.balance && result.account.length > 0) {
+        setethPrice(result.eth);
         setAcct(result.account[0]); // store first address as string
         setbalance(result.balance);
         setIsAdmin(result.isAdmin);
@@ -61,8 +63,8 @@ export default function Walletbar() {
             <path d="M21 12H3" />
           </svg>
           <div className="text-left rtl:text-right">
-            <div className="text-xs">0.004769 = 15$</div>
-            <div className="text-sm font-bold">Price per course</div>
+            <div className="text-xs">1 Ethereum</div>
+            <div className="text-sm font-bold">{ethPrice} $</div>
           </div>
         </a>
       </div>
