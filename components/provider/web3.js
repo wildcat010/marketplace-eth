@@ -4,6 +4,7 @@
 import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3";
+import { loadContract } from "@utils/loadContract";
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 import { setupHooks } from "./hooks/setupHooks";
@@ -24,7 +25,9 @@ export default function Web3Provider({ children }) {
       if (provider) {
         console.log("provider find");
         const web3 = new Web3(provider);
-        setWeb3Api({ provider, web3, contract: null, isLoading: false });
+        const contract = await loadContract("CourseMarketplace", web3)
+        console.log("contract",contract)
+        setWeb3Api({ provider, web3, contract: contract, isLoading: false });
       } else {
         const provider = new HDWalletProvider({
           privateKeys: [
@@ -35,11 +38,17 @@ export default function Web3Provider({ children }) {
         });
 
         const web3_2 = new Web3(provider);
+        console.log(1)
+        const contract = await loadContract("CourseMarketplace", web3_2)
+        console.log(2)
+
+        console.log("contract",contract)
+        console.log(3)
 
         setWeb3Api({
           provider,
           web3: web3_2,
-          contract: null,
+          contract: contract,
           isLoading: false,
         });
       }
@@ -53,6 +62,8 @@ export default function Web3Provider({ children }) {
       hooks: setupHooks(web3Api.web3),
     };
   }, [web3Api]);
+
+  console.log("web3Api",_web3Api)
 
   return (
     <Web3Context.Provider value={_web3Api}>{children}</Web3Context.Provider>

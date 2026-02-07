@@ -32,9 +32,11 @@ export const useNetwork = (web3) => async () => {
   }
 
   if (req) {
+    const chainId = typeof req === "string" ? parseInt(req, 16) : req;
+
     return {
-      network: NETWORKS[req],
-      isValidNetwork: isValidNetwork(req),
+      network: NETWORKS[chainId],
+      isValidNetwork: chainId in NETWORKS,
     };
   }
 };
