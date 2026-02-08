@@ -21,14 +21,36 @@ export default function Web3Provider({ children }) {
 
   useEffect(() => {
     const loadProvider = async () => {
-      const provider = await detectEthereumProvider();
+      const provider: any = await detectEthereumProvider();
+
+      console.log("provider", provider);
+
       if (provider) {
-        console.log("provider find");
         const web3 = new Web3(provider);
-        const contract = await loadContract("CourseMarketplace", web3)
-        console.log("contract",contract)
-        setWeb3Api({ provider, web3, contract: contract, isLoading: false });
+
+        // Wait until provider is ready to get chainId
+        const chainId = await web3.eth.getChainId();
+
+        console.log("chaind id ", chainId);
+
+        if (chainId !== 5777) {
+          alert("Please switch MetaMask to Ganache Local!");
+        }
+
+        const contract = await loadContract("CourseMarketplace", web3);
+
+        setWeb3Api({ provider, web3, contract, isLoading: false });
+
+        // Listen for account / network changes
+        provider.on("accountsChanged", (accounts: string[]) => {
+          setWeb3Api((prev) => ({ ...prev, web3, contract })); // just refresh state
+        });
+
+        provider.on("chainChanged", async (_chainId: string) => {
+          window.location.reload(); // reload if network changes
+        });
       } else {
+        // fallback (optional, keep your original Sepolia HDWalletProvider if you want)
         const provider = new HDWalletProvider({
           privateKeys: [
             "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
@@ -38,12 +60,7 @@ export default function Web3Provider({ children }) {
         });
 
         const web3_2 = new Web3(provider);
-        console.log(1)
-        const contract = await loadContract("CourseMarketplace", web3_2)
-        console.log(2)
-
-        console.log("contract",contract)
-        console.log(3)
+        const contract = await loadContract("CourseMarketplace", web3_2);
 
         setWeb3Api({
           provider,
@@ -62,8 +79,6 @@ export default function Web3Provider({ children }) {
       hooks: setupHooks(web3Api.web3),
     };
   }, [web3Api]);
-
-  console.log("web3Api",_web3Api)
 
   return (
     <Web3Context.Provider value={_web3Api}>{children}</Web3Context.Provider>

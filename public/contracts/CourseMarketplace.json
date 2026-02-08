@@ -7409,12 +7409,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xb326aF828D354586BD24E2260F8aC9Bec7cb7703",
-      "transactionHash": "0x8b27c58f6c3df36020672a175ce6865ff3e3e8e2ba9e363e1a48bb1c31429159"
+      "address": "0x0e992Fa2b432dfd598e1cBD75C95D6A64bc4Dad1",
+      "transactionHash": "0x2d33b492ff52603a718e6621bc510a7a09beac0952e11bac1326aa77eada9438"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2026-02-07T20:05:38.180Z",
+  "updatedAt": "2026-02-08T16:47:05.412Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
