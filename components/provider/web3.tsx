@@ -34,7 +34,7 @@ export default function Web3Provider({ children }) {
 
         console.log("chaind id ", chainId);
 
-        const contract = await loadContract("CourseMarketplace", web3);
+        const contract = await loadContract("CourseMarketplace", web3, "1337");
         console.log("contract", contract);
 
         setWeb3Api({ provider, web3, contract, isLoading: false });
@@ -50,22 +50,26 @@ export default function Web3Provider({ children }) {
         });
       } else {
         console.log("fallback");
-        // fallback (optional, keep your original Sepolia HDWalletProvider if you want)
-        // const provider = new HDWalletProvider({
-        //   privateKeys: [
-        //     "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
-        //   ],
-        //   providerOrUrl:
-        //     "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
-        // });
-        // const web3_2 = new Web3(provider);
-        // const contract = await loadContract("CourseMarketplace", web3_2);
-        // setWeb3Api({
-        //   provider,
-        //   web3: web3_2,
-        //   contract: contract,
-        //   isLoading: false,
-        // });
+
+        const provider = new HDWalletProvider({
+          privateKeys: [
+            "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
+          ],
+          providerOrUrl:
+            "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
+        });
+        const web3_2 = new Web3(provider);
+        const contract = await loadContract(
+          "CourseMarketplace",
+          web3_2,
+          "11155111",
+        );
+        setWeb3Api({
+          provider,
+          web3: web3_2,
+          contract: contract,
+          isLoading: false,
+        });
       }
     };
     loadProvider();
