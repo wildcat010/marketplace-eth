@@ -21,11 +21,11 @@ export const useNetwork = (web3) => async () => {
   let req;
   try {
     if (web3.provider && web3.provider.request) {
-      req = await web3.provider.request({
+      req = await web3.web3.provider.request({
         method: "eth_chainId",
       });
     } else {
-      req = await web3.eth.net.getId();
+      req = await web3.web3.eth.net.getId();
     }
   } catch (err) {
     console.error("connect error:", err);

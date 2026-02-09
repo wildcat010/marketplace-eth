@@ -1,4 +1,27 @@
+"use client";
+import { useWeb3 } from "@components/provider/web3";
+import { useEffect, useState } from "react";
+
 export default function Card() {
+  const { hooks } = useWeb3();
+  const [nbrCourses, setNbrCourses] = useState(0);
+
+  useEffect(() => {
+    const loadNetwork = async () => {
+      if (!hooks.useOwnedCourses) return;
+
+      const courses = await hooks.useOwnedCourses(); // call the async function
+
+      console.log("courses", courses);
+      if (courses) {
+        console.log("courses", courses);
+        setNbrCourses(courses.ownedCourses);
+      }
+    };
+
+    loadNetwork();
+  }, [hooks.useOwnedCourses]);
+
   return (
     <div className="w-full  mx-auto p-6 bg-neutral-primary-soft border border-default rounded-base shadow-xs my-6">
       <div className="flex items-center justify-between mb-4">

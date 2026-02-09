@@ -35,7 +35,7 @@ export default function Web3Provider({ children }) {
         console.log("chaind id ", chainId);
 
         const contract = await loadContract("CourseMarketplace", web3, "1337");
-        console.log("contract", contract);
+        console.log("contract 1", contract);
 
         setWeb3Api({ provider, web3, contract, isLoading: false });
 
@@ -64,6 +64,7 @@ export default function Web3Provider({ children }) {
           web3_2,
           "11155111",
         );
+        console.log("contract 2", contract);
         setWeb3Api({
           provider,
           web3: web3_2,
@@ -78,7 +79,7 @@ export default function Web3Provider({ children }) {
   const _web3Api = useMemo(() => {
     return {
       ...web3Api,
-      hooks: setupHooks(web3Api.web3),
+      hooks: setupHooks(web3Api),
     };
   }, [web3Api]);
 

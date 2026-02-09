@@ -21,14 +21,14 @@ export const useAccount = (web3) => async () => {
   let eth;
   try {
     if (web3 && web3.provider && web3.provider.request) {
-      req = await web3.provider.request({
+      req = await web3.web3.provider.request({
         method: "eth_requestAccounts",
       });
     } else {
-      req = await web3.eth.getAccounts();
+      req = await web3.web3.eth.getAccounts();
     }
-    const wei = await web3.eth.getBalance(req[0]);
-    eth = web3.utils.fromWei(wei, "ether");
+    const wei = await web3.web3.eth.getBalance(req[0]);
+    eth = web3.web3.utils.fromWei(wei, "ether");
   } catch (err) {
     console.error("connect error:", err);
   }
@@ -40,7 +40,7 @@ export const useAccount = (web3) => async () => {
     return {
       account: req,
       balance: eth,
-      isAdmin: isAdmin(web3.utils.keccak256(req[0])),
+      isAdmin: isAdmin(web3.web3.utils.keccak256(req[0])),
       eth: json.market_data.current_price.usd ?? null,
     };
   }
