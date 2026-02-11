@@ -32,7 +32,11 @@ export default function Web3Provider({ children }) {
         // Wait until provider is ready to get chainId
         const chainId = (await web3.eth.getChainId()).toString();
 
+        console.log("chainId", chainId);
+
         const contract = await loadContract("CourseMarketplace", web3, chainId);
+
+        console.log("chainId", contract);
 
         setWeb3Api({ provider, web3, contract, isLoading: false });
 
