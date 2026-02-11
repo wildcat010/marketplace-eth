@@ -1,8 +1,5 @@
-require('dotenv').config({ path: './.env.development' });
+require("dotenv").config({ path: "./.env.development" });
 const HDWalletProvider = require("@truffle/hdwallet-provider");
-
-console.log("PRIVATE_KEY:", process.env.PRIVATE_KEY);
-console.log("INFURA_PROJECT_ID:", process.env.INFURA_PROJECT_ID);
 
 module.exports = {
   contracts_build_directory: "./public/contracts",
@@ -15,10 +12,10 @@ module.exports = {
     },
     sepolia: {
       provider: () =>
-        new HDWalletProvider({
-          privateKeys: [process.env.PRIVATE_KEY],
-          providerOrUrl: `https://sepolia.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
-        }),
+        new HDWalletProvider(
+          "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
+          "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
+        ),
       network_id: 11155111,
       gas: 5500000,
       confirmations: 2,

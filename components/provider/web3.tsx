@@ -32,10 +32,7 @@ export default function Web3Provider({ children }) {
         // Wait until provider is ready to get chainId
         const chainId = (await web3.eth.getChainId()).toString();
 
-        console.log("chaind id ", chainId);
-
-        const contract = await loadContract("CourseMarketplace", web3, "1337");
-        console.log("contract 1", contract);
+        const contract = await loadContract("CourseMarketplace", web3, chainId);
 
         setWeb3Api({ provider, web3, contract, isLoading: false });
 
@@ -59,12 +56,15 @@ export default function Web3Provider({ children }) {
             "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
         });
         const web3_2 = new Web3(provider);
+
+        const myChaindId = await web3_2.eth.net.getId();
+
         const contract = await loadContract(
           "CourseMarketplace",
           web3_2,
-          "11155111",
+          myChaindId,
         );
-        console.log("contract 2", contract);
+
         setWeb3Api({
           provider,
           web3: web3_2,

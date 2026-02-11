@@ -14,6 +14,7 @@ contract CourseMarketplace {
     uint price; // 32
     bytes32 proof; // 32
     address owner; // 20
+    bytes16 courseId; // 16
     State state; // 1
   }
 
@@ -64,6 +65,7 @@ contract CourseMarketplace {
       price: msg.value,
       proof: proof,
       owner: msg.sender,
+      courseId: courseId,
       state: State.Purchased
     });
   }
