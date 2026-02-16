@@ -28,11 +28,14 @@ export function usePurchase() {
 
       const value = web3.utils.toWei("0.01", "ether");
       console.log("value", value);
+      console.log("email hash", emailHash);
 
-      await contract.methods.purchaseCourse(hexCourseId, proof).send({
-        from: result.account[0],
-        value,
-      });
+      await contract.methods
+        .purchaseCourse(hexCourseId, proof, emailHash)
+        .send({
+          from: result.account[0],
+          value,
+        });
     } catch (err) {
       console.error("Purchase failed:", err);
       throw err;

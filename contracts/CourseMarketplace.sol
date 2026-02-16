@@ -27,6 +27,10 @@ contract CourseMarketplace {
   // mapping of courseID to courseHash
   mapping(uint => bytes32) private ownedCourseHash;
 
+  mapping(bytes32 => bytes32[]) private emailToCourses;
+
+  bytes32[] private allEmailHashes;
+
   address payable public owner;
 
   /// The course has been purchased
@@ -44,7 +48,8 @@ contract CourseMarketplace {
 
   function purchaseCourse(
     bytes16 courseId, // 0x00000000000000000000000000003130
-    bytes32 proof // 0x0000000000000000000000000000313000000000000000000000000000003130
+    bytes32 proof, // 0x0000000000000000000000000000313000000000000000000000000000003130
+    bytes32 emailHash
   )
     external
     payable
@@ -68,6 +73,14 @@ contract CourseMarketplace {
       courseId: courseId,
       state: State.Purchased
     });
+
+    // Map emailHash to purchased course
+    emailToCourses[emailHash].push(courseHash);
+
+    // Optional: track all email hashes (only if new)
+    if(emailToCourses[emailHash].length == 1) {
+      allEmailHashes.push(emailHash);
+    }
   }
 
   function getOwnedCourseHash(uint index) external view returns(bytes32){
@@ -82,8 +95,18 @@ contract CourseMarketplace {
     return(ownedCourses[hash].owner == msg.sender);
     }  
 
-    function setContractOwner(address newOwner) external restricted(newOwner){
-       
-        owner = payable(newOwner);
-    } 
+  function setContractOwner(address newOwner) external restricted(newOwner){
+    owner = payable(newOwner);
+  } 
+
+  function getCoursesByEmail(bytes32 emailHash) external view returns (Course[] memory) {
+    bytes32[] storage hashes = emailToCourses[emailHash];
+    Course[] memory courses = new Course[](hashes.length);
+
+    for (uint i = 0; i < hashes.length; i++) {
+        courses[i] = ownedCourses[hashes[i]];
+    }
+
+    return courses;
+  }
 }
