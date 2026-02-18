@@ -3,12 +3,23 @@ import { useEffect, useState } from "react";
 import { usePurchase } from "./usePurchase";
 
 export default function Modal({ course, onClose }) {
-  useEffect(() => {}, [course]);
+  const [email, setEmail] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
   const { purchaseCourse } = usePurchase();
 
+  useEffect(() => {
+    const emailRegex = /\S+@\S+\.\S+/;
+    setIsValid(emailRegex.test(email));
+  }, [email]);
+
   const handlePurchase = async () => {
+    if (!isValid) {
+      alert("Please enter a valid email address.");
+      return;
+    }
     try {
-      const tx = await purchaseCourse(course, "test@gmail.com");
+      const tx = await purchaseCourse(course, email);
       console.log("Transaction Success", tx);
 
       onClose(); // close modal
@@ -59,11 +70,16 @@ export default function Modal({ course, onClose }) {
               Email
             </label>
             <input
-              type="text"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body"
-              placeholder=""
+              placeholder="you@example.com"
               required
             />
+            {!isValid && email && (
+              <p className="text-red-500 text-xs mt-1">Invalid email address</p>
+            )}
           </div>
         </div>
 
@@ -71,7 +87,8 @@ export default function Modal({ course, onClose }) {
         <div className="bg-gray-700 px-6 py-4 flex justify-end gap-3">
           <button
             onClick={handlePurchase}
-            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5"
+            disabled={!isValid}
+            className="text-white bg-gradient-to-br  from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand"
           >
             Purchase
           </button>

@@ -35,7 +35,7 @@ export const useCoursesByEmail = (web3) => async (email) => {
         courseId: bytes16ToNumber(c[4]),
         state: Number(c[5]),
       }));
-
+      console.log("parsedCourses", parsedCourses);
       addCourses(parsedCourses);
     }
   } catch (err) {

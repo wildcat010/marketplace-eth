@@ -1,17 +1,24 @@
 "use client";
 import { useCoursesStore } from "./../course/services/zustand";
+import { useState, useEffect } from "react";
 
 export default function Lectures({ lectures }) {
-  const courses = useCoursesStore((state: any) => state.courses);
+  const courses = useCoursesStore((state: any) => {
+    return state.courses;
+  });
 
-  const newCourses = courses.map((c: any) => {
-    const meta = lectures.find((m: any) => {
-      return m.id == c[0].courseId;
-    });
+  const store: any = useCoursesStore.getState();
+
+  useEffect(() => {
+    store.clearCourses();
+  }, []);
+
+  const newCourses = courses.flat().map((c: any) => {
+    const meta = lectures.find((m: any) => String(m.id) === String(c.courseId));
 
     return {
       id: meta.id,
-      price: c[0].price,
+      price: c.price,
       type: meta.type,
       title: meta.title,
       coverImage: meta.coverImage,
