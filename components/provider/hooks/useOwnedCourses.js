@@ -34,7 +34,6 @@ export const useOwnedCourses = (web3) => async () => {
       const course = await web3.contract.methods
         .getOwnedCourse(myCourseOwned)
         .call();
-      console.log("course", course);
       if (course) {
         course.courseId = bytes16ToNumber(course.courseId);
         coursesOwned.push(course);

@@ -57,7 +57,7 @@ export default function Web3Provider({ children }) {
             "5688e9741acf81487d7ce7c3bca4d2df243ec9ca81c8ed3e09d7b04c2a484796",
           ],
           providerOrUrl:
-            "https://sepolia.infura.io/v3/13d42e71f5b149109e3abf6e83cb93e4",
+            "https://eth-sepolia.g.alchemy.com/v2/fKAEOsW0bPfVJ-Blws3PL",
         });
         const web3_2 = new Web3(provider);
 

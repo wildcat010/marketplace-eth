@@ -1,11 +1,15 @@
 import { create } from "zustand";
 
-export const useEmailStore = create((set) => ({
-  currentEmail: "",
-  purchases: [],
+export const useCoursesStore = create((set) => ({
+  courses: [],
 
-  setCurrentEmail: (email) => set({ currentEmail: email }),
+  addCourses: (course) =>
+    set((state) => ({
+      courses: [...state.courses, course],
+    })),
 
-  addPurchase: (email) =>
-    set((state) => ({ purchases: [...state.purchases, email] })),
+  clearCourses: () =>
+    set(() => ({
+      courses: [],
+    })),
 }));

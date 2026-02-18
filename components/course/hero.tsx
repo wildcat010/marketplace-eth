@@ -9,22 +9,11 @@ export default function Hero() {
   const [debouncedEmail, setDebouncedEmail] = useState(email);
   const [isValid, setIsValid] = useState(false);
 
-  useEffect(() => {
-    const getEmailToCourses = async () => {
-      if (!hooks.useCoursesByEmail) return;
+  const getEmailToCourses = async () => {
+    console.log("hooks", hooks);
 
-      console.log("hooks", hooks);
-
-      const coursesByEmail = await hooks.useCoursesByEmail(); // call the async function
-
-      console.log("coursesByEmail", coursesByEmail);
-
-      if (coursesByEmail) {
-      }
-    };
-
-    getEmailToCourses();
-  }, [hooks.useCoursesByEmail]);
+    await hooks.useCoursesByEmail(email); // call the async function
+  };
 
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
@@ -33,7 +22,9 @@ export default function Hero() {
       setDebouncedEmail(email); // update after user stops typing
       console.log("Debounced email:", email);
       console.log("valid email", isValidEmail(email));
-      setIsValid(isValidEmail(email));
+      if (isValidEmail(email)) {
+        setIsValid(isValidEmail(email));
+      }
     }, 300);
 
     return () => clearTimeout(handler); // cancel if user types again
@@ -41,6 +32,10 @@ export default function Hero() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (isValid == true && hooks.useCoursesByEmail) {
+      getEmailToCourses();
+    }
 
     console.log("Submitted email:", e);
   };
@@ -62,7 +57,7 @@ export default function Hero() {
             <div className="relative pt-6 px-4 sm:px-6 lg:px-8"></div>
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
-                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-300 sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">Customer Search</span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
@@ -84,7 +79,25 @@ export default function Hero() {
                 <button
                   type="submit"
                   disabled={!isValid}
-                  className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                  className="
+                  text-white 
+                  bg-brand 
+                  box-border 
+                  border border-transparent 
+                  font-medium leading-5 
+                  rounded-base text-sm 
+                  px-4 py-2.5 
+                  shadow-xs 
+                  focus:outline-none
+
+                  hover:bg-brand-strong 
+                  focus:ring-4 
+                  focus:ring-brand-medium
+
+                  disabled:opacity-40 
+                  disabled:cursor-not-allowed 
+                  disabled:hover:bg-brand
+                "
                 >
                   Find Courses
                 </button>

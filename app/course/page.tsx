@@ -1,16 +1,10 @@
 import Lectures from "@components/course/lectures";
 import Hero from "@components/course/hero";
 import Keypoints from "@components/course/keypoints";
+import { getAllCourse } from "@components/course/content/fetcher";
 
 export default function Course() {
-  const lectures = [
-    "How to init App",
-    "How to get a help",
-    "Introduction to Solidity",
-    "Programing in C++",
-    "How to write For Loops",
-    "Safe operator",
-  ];
+  const { data, courseMap } = getAllCourse();
 
   return (
     <div className="relative max-w-7xl mx-auto px-4">
@@ -18,12 +12,8 @@ export default function Course() {
       <Hero></Hero>
       {/*------ HERO ENDS ------*/}
 
-      {/*------ KEYPOINT STARTS ------*/}
-      <Keypoints></Keypoints>
-      {/*------ KEYPOINT ENDS ------*/}
-
       {/*------ LECTURES STARTS ------*/}
-      <Lectures lectures={lectures}></Lectures>
+      <Lectures lectures={data}></Lectures>
       {/*------ LECTURES ENDS ------*/}
 
       {/* MODAL STARTS */}
