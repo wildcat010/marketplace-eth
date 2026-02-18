@@ -14,6 +14,7 @@ export default function Hero() {
       const network = await hooks.useNetwork(); // call the async function
 
       if (network && network.network) {
+        console.log("network", network);
         setNetwork(network.network);
         setIsValidNetwork(network.isValidNetwork);
       }
@@ -38,9 +39,12 @@ export default function Hero() {
         {isValidNetwork ? (
           ""
         ) : (
-          <span className="text-gray-400">
-            You Need to connect on the Sepola Network for the app to work.
-          </span>
+          <div>
+            <span className="text-gray-400">
+              You Need to connect on the Sepola Network for the app to work.
+            </span>
+            <span>Currently connected to {network}</span>
+          </div>
         )}
       </div>
     </section>

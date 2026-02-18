@@ -4,14 +4,7 @@ const NETWORKS = {
   11155111: "sepolia",
   137: "polygon",
   80001: "mumbai",
-};
-
-const isValidNetwork = (networdId) => {
-  if (networdId.toString() == 11155111) {
-    return true;
-  } else {
-    return false;
-  }
+  1337: "Ganache Local"
 };
 
 export const useNetwork = (web3) => async () => {
