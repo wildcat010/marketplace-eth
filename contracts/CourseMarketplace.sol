@@ -55,7 +55,7 @@ contract CourseMarketplace {
     payable
   {
 
-    bytes32 courseHash = keccak256(abi.encodePacked(courseId, msg.sender));
+    bytes32 courseHash = keccak256(abi.encodePacked(courseId, emailHash, msg.sender));
 
     if(hasCourseOwnership(courseHash)){
         revert hasOwnership();

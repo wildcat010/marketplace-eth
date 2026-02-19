@@ -24,6 +24,7 @@ export default function Modal({ course, onClose }) {
 
       onClose(); // close modal
     } catch (err) {
+      setEmail("");
       alert("Purchase failed");
     }
   };

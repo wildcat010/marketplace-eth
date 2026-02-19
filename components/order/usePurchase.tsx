@@ -9,8 +9,6 @@ export function usePurchase() {
     try {
       const result = await hooks.useAccount(); // call the async function
 
-      console.log("accounts", result);
-
       let hexCourseId = web3.utils.utf8ToHex(course.id);
       hexCourseId = hexCourseId.padEnd(34, "0"); // 0x + 32 chars
 
@@ -27,8 +25,6 @@ export function usePurchase() {
       );
 
       const value = web3.utils.toWei("0.01", "ether");
-      console.log("value", value);
-      console.log("email hash", emailHash);
 
       await contract.methods
         .purchaseCourse(hexCourseId, proof, emailHash)
