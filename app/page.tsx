@@ -29,10 +29,6 @@ export default function Home() {
       <Hero></Hero>
       {/*------ HERO ENDS ------*/}
 
-      {/*------ BREADCRUMBS STARTS ------*/}
-      <Breacrumps></Breacrumps>
-      {/*------ BREADCRUMBS ENDS ------*/}
-
       {/*------ ADDRESS STARTS ------*/}
       <Walletbar></Walletbar>
       {/*------ ADDRESS ENDS ------*/}

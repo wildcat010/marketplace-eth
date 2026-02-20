@@ -15,7 +15,6 @@ contract CourseMarketplace {
     bytes32 proof; // 32
     address owner; // 20
     bytes16 courseId; // 16
-    State state; // 1
   }
 
   // number of all courses + id of the course
@@ -70,8 +69,7 @@ contract CourseMarketplace {
       price: msg.value,
       proof: proof,
       owner: msg.sender,
-      courseId: courseId,
-      state: State.Purchased
+      courseId: courseId
     });
 
     // Map emailHash to purchased course
