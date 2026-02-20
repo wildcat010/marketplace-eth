@@ -8,6 +8,18 @@ contract("CourseMarketplace", (accounts) => {
   let contractowner = null;
   let buyer = null;
 
+  const toBN = (value) => web3.utils.toBN(value);
+
+  const getGas = async (result) => {
+    const tx = await web3.eth.getTransaction(result.tx);
+
+    const gasUsed = toBN(result.receipt.gasUsed);
+    const gasPriced = toBN(tx.gasPrice);
+    const gasCost = gasUsed.mul(gasPriced); // total gas cost in wei
+
+    return gasCost;
+  };
+
   before(async () => {
     contract = await courseMarketPlace.deployed();
 
@@ -28,6 +40,39 @@ contract("CourseMarketplace", (accounts) => {
     it("should have 0 balance initially", async () => {
       const balance = await web3.eth.getBalance(contract.address);
       assert.equal(balance, 0, "Contract balance should be 0 initially");
+    });
+
+    it("should check the balance of the user before and after purchase", async () => {
+      const courseId = web3.utils.asciiToHex("COURSE100");
+      const proof = web3.utils.asciiToHex("proof101");
+      const emailHash = web3.utils.sha3("user@example.com");
+      const price = web3.utils.toWei("1", "ether");
+
+      const balanceBeforeBuy = await web3.eth.getBalance(buyer);
+
+      const result = await contract.purchaseCourse(courseId, proof, emailHash, {
+        from: buyer,
+        value: price,
+      });
+
+      //determine price of the gas
+      const gas = await getGas(result);
+
+      const balanceAfterBuy = await web3.eth.getBalance(buyer);
+
+      assert.equal(
+        toBN(balanceBeforeBuy).sub(toBN(price)).sub(gas).toString(),
+        balanceAfterBuy.toString(),
+        "balance is not correct",
+      );
+
+      const balanceSmartContract = await web3.eth.getBalance(contract.address);
+
+      assert.equal(
+        balanceSmartContract,
+        web3.utils.toWei("1", "ether"),
+        "smart contract balance is not correct",
+      );
     });
   });
 
