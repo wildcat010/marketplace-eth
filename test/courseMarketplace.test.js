@@ -1,4 +1,5 @@
 const { before } = require("node:test");
+const truffleAssert = require("truffle-assertions");
 
 const courseMarketPlace = artifacts.require("CourseMarketplace");
 
@@ -44,6 +45,28 @@ contract("CourseMarketplace", (accounts) => {
       });
 
       assert.equal(result.receipt.status, true, "successful transaction");
+    });
+
+    it("should fail if we try to re-purchase the same course", async () => {
+      const courseId = web3.utils.asciiToHex("COURSE102");
+      const proof = web3.utils.asciiToHex("proof101");
+      const emailHash = web3.utils.sha3("user@example.com");
+      const price = web3.utils.toWei("1", "ether");
+
+      // First purchase succeeds
+      const first = await contract.purchaseCourse(courseId, proof, emailHash, {
+        from: buyer,
+        value: price,
+      });
+      assert.equal(first.receipt.status, true, "First purchase should succeed");
+
+      // Second purchase should revert
+      await truffleAssert.reverts(
+        contract.purchaseCourse(courseId, proof, emailHash, {
+          from: buyer,
+          value: price,
+        }),
+      );
     });
   });
 });
