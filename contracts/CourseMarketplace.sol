@@ -32,17 +32,37 @@ contract CourseMarketplace {
 
   address payable public owner;
 
+  bool public isStopped;
+
   /// The course has been purchased
   error hasOwnership();
+
+  modifier isContractStopped{
+        require(isStopped == false);
+        _;
+  }
+
+  modifier onlyOwner {
+        require(msg.sender == owner, "Only manager allowed");
+        _;
+  }
 
   modifier restricted(address newOwner) {
         require(msg.sender == owner, "Only manager allowed");
         require(owner != newOwner, "Same address");
         _;
-    }
+  }
 
   constructor(){
     owner = payable(msg.sender);
+  }
+
+  function stopContract() external onlyOwner {
+    isStopped = true;
+  }
+
+  function resumeContract() external onlyOwner {
+    isStopped = false;
   }
 
   function purchaseCourse(
@@ -51,7 +71,7 @@ contract CourseMarketplace {
     bytes32 emailHash
   )
     external
-    payable
+    payable isContractStopped
   {
 
     bytes32 courseHash = keccak256(abi.encodePacked(courseId, emailHash, msg.sender));
@@ -81,6 +101,25 @@ contract CourseMarketplace {
     }
   }
 
+  function shutdown() external onlyOwner {
+    isStopped = true;
+    (bool success,) = owner.call{value: address(this).balance}("");
+    require(success, "Transfer failed");
+}
+
+  receive() external payable{
+  }
+
+  function withdraw(uint amount) external onlyOwner{
+    (bool success,) = owner.call{value: amount}("");
+    require(success,"error during the fransfer");
+  }
+
+  function withdrawAllBalance() external onlyOwner{
+    (bool success,) = owner.call{value: address(this).balance}("");
+    require(success,"error during the fransfer");
+  }
+
   function getOwnedCourseHash(uint index) external view returns(bytes32){
     return ownedCourseHash[index];
   }
@@ -97,7 +136,7 @@ contract CourseMarketplace {
     owner = payable(newOwner);
   } 
 
-  function getCoursesByEmail(bytes32 emailHash) external view returns (Course[] memory) {
+  function getCoursesByEmail(bytes32 emailHash) external view isContractStopped returns (Course[] memory) {
     bytes32[] storage hashes = emailToCourses[emailHash];
     Course[] memory courses = new Course[](hashes.length);
 
