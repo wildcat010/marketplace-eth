@@ -38,7 +38,7 @@ contract CourseMarketplace {
   error hasOwnership();
 
   modifier isContractStopped{
-        require(isStopped == false);
+        require(isStopped == false,"Contract is stopped");
         _;
   }
 
