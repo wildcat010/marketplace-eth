@@ -1,14 +1,31 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useWeb3 } from "@components/provider/web3";
+import { useAdminFeatures } from "./services/useAdmin";
 
 export default function Keypoints({ lectures }) {
   const { hooks } = useWeb3();
   const [contractBalance, setContractBalance] = useState(0);
+  const [contractOwner, setContractOwner] = useState("");
+
+  const { setNewOwner, getOwner } = useAdminFeatures();
 
   useEffect(() => {
-    console.log("lectures", lectures.length);
-  }, []);
+    const getAdminInfo = async () => {
+      const owner = await getOwner();
+      setContractOwner(owner?.owner);
+    };
+    getAdminInfo();
+  }, [contractOwner, contractBalance]);
+
+  const setNewContractOwner = async () => {
+    const response = await setNewOwner(
+      "0xCB7A85a46011152B23Ed230443d32D1DA33b8499",
+    );
+    if (response?.status == "success") {
+      setContractOwner(response.owner);
+    }
+  };
 
   useEffect(() => {
     const loadNetwork = async () => {
@@ -17,7 +34,9 @@ export default function Keypoints({ lectures }) {
       const network = await hooks.useNetwork(); // call the async function
 
       if (network && network.contractBalanceWei !== null) {
+        const owner = await getOwner();
         setContractBalance(network.contractBalanceWei);
+        setContractOwner(owner?.owner);
       }
     };
 
@@ -80,7 +99,16 @@ export default function Keypoints({ lectures }) {
                     Set new Owner
                   </p>
                 </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-200">Owner</dd>
+                <dd className="mt-2 ml-16 text-base text-gray-200">
+                  {contractOwner}
+                  <button
+                    onClick={setNewContractOwner}
+                    type="button"
+                    className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                  >
+                    Default
+                  </button>
+                </dd>
               </div>
               <div className="relative">
                 <dt>
