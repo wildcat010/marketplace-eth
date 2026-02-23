@@ -12,6 +12,8 @@ export default function Course() {
       <Hero></Hero>
       {/*------ HERO ENDS ------*/}
 
+      <Keypoints lectures={data}></Keypoints>
+
       {/*------ LECTURES STARTS ------*/}
       <Lectures lectures={data}></Lectures>
       {/*------ LECTURES ENDS ------*/}
