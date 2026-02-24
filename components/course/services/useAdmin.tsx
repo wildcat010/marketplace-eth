@@ -10,7 +10,7 @@ export function useAdminFeatures() {
       //get the owner
       const owner = await contract.methods.owner().call();
 
-      return { status: "success", owner: owner };
+      return { status: true, owner: owner };
     } catch (e) {
       console.error(e);
     }
@@ -21,7 +21,7 @@ export function useAdminFeatures() {
       //get the contract flag
       const isStopped = await contract.methods.isStopped().call();
 
-      return { status: "success", stopped: isStopped };
+      return { status: true, stopped: isStopped };
     } catch (e) {
       console.error(e);
     }
@@ -34,7 +34,7 @@ export function useAdminFeatures() {
 
       //check if not the same address
       if (newAddress == owner) {
-        console.log("the same address");
+        return { status: false, error: "same address", owner: newAddress };
       } else {
         const result = await hooks.useAccount(); // call the async function
 
@@ -42,11 +42,10 @@ export function useAdminFeatures() {
         await contract.methods
           .setContractOwner(newAddress)
           .send({ from: result.account[0] });
-
-        return { status: "success", owner: newAddress };
+        return { status: true, owner: newAddress, error: "" };
       }
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      return { status: true, owner: newAddress, error: e.message };
     }
   };
 

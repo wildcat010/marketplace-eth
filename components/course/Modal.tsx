@@ -67,10 +67,66 @@ export default function ModalAdmin({ option, onClose }) {
     }
   };
 
+  const renderFooterByType = (option) => {
+    switch (option?.type) {
+      case "address":
+        return (
+          <>
+            <button
+              onClick={() => onClickSetNewContractOwner(address)}
+              disabled={!isValid}
+              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand"
+            >
+              Change Owner
+            </button>
+            <button
+              onClick={() => {
+                setError("");
+                onClose();
+              }}
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-base text-sm px-4 py-2.5"
+            >
+              Cancel
+            </button>
+          </>
+        );
+
+      case "withdraw":
+        return (
+          <>
+            <button
+              onClick={() => onClickWithdrawSome(amount)}
+              disabled={amount <= 0}
+              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand"
+            >
+              Withdraw
+            </button>
+            <button
+              onClick={() => {
+                setError("");
+                onClose;
+              }}
+              className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-base text-sm px-4 py-2.5"
+            >
+              Cancel
+            </button>
+          </>
+        );
+
+      // Add more cases for other types
+      default:
+        return null;
+    }
+  };
+
   const onClickSetNewContractOwner = async (address) => {
+    setError("");
     const response = await setNewOwner(address);
-    if (response?.status != "success") {
-      setError("Couldn't change the Owner");
+    if (response?.status == true) {
+      //close
+      onClose(); // close modal
+    } else {
+      setError(response?.error);
     }
   };
 
@@ -113,21 +169,9 @@ export default function ModalAdmin({ option, onClose }) {
         {/* Scrollable content */}
         {renderInputByType(option)}
 
-        {/* Footer buttons */}
+        <p className="text-red-500 text-xs mt-1">{error}</p>
         <div className="bg-gray-700 px-6 py-4 flex justify-end gap-3">
-          <button
-            onClick={onClickSetNewContractOwner}
-            disabled={!isValid}
-            className="text-white bg-gradient-to-br  from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand"
-          >
-            Ok
-          </button>
-          <button
-            onClick={onClose}
-            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-base text-sm px-4 py-2.5"
-          >
-            Cancel
-          </button>
+          {renderFooterByType(option)}
         </div>
       </div>
     </section>
