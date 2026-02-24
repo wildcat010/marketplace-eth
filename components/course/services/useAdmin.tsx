@@ -16,6 +16,17 @@ export function useAdminFeatures() {
     }
   };
 
+  const getStatusContract = async () => {
+    try {
+      //get the contract flag
+      const isStopped = await contract.methods.isStopped().call();
+
+      return { status: "success", stopped: isStopped };
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const setNewOwner = async (newAddress) => {
     try {
       //get the owner
@@ -39,5 +50,5 @@ export function useAdminFeatures() {
     }
   };
 
-  return { setNewOwner, getOwner };
+  return { setNewOwner, getOwner, getStatusContract };
 }
