@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState, useEffect } from "react";
 import { useWeb3 } from "@components/provider/web3";
@@ -20,9 +21,16 @@ export default function Keypoints({ lectures }) {
 
   const onChangeDisableSmartContract = async () => {
     debugger;
-    const result = await enableDisableStatusContract();
+    const result: any = await enableDisableStatusContract();
     console.log("result", result);
+
+    if (result.status == true) {
+      setIsStopped(result.stopped);
+    } else {
+    }
   };
+
+  useEffect(() => {}, [isStopped]);
 
   const displayContractFlag = () => {
     if (isStopped === null) {

@@ -39,7 +39,7 @@ export function useAdminFeatures() {
           .send({ from: result.account[0] });
       }
       const updatedStatus = await contract.methods.isStopped().call();
-      return { status: true, stopped: updatedStatus };
+      return { status: true, stoped: updatedStatus };
     } catch (e: any) {
       return { status: false, error: e?.error.message };
     }
