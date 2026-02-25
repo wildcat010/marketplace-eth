@@ -9,9 +9,9 @@ export default function ModalAdmin({ option, onClose }) {
   const [amount, setAmount] = useState(0);
   const [error, setError] = useState("");
 
-  const { setNewOwner, getOwner } = useAdminFeatures();
+  const { setNewOwner, getOwner, withdrawSome } = useAdminFeatures();
 
-  const { web3 } = useWeb3();
+  const { web3, hooks } = useWeb3();
 
   const renderInputByType = (option) => {
     switch (option?.type) {
@@ -104,7 +104,7 @@ export default function ModalAdmin({ option, onClose }) {
             <button
               onClick={() => {
                 setError("");
-                onClose;
+                onClose();
               }}
               className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-base text-sm px-4 py-2.5"
             >
@@ -130,9 +130,16 @@ export default function ModalAdmin({ option, onClose }) {
     }
   };
 
-  const onClickWithdrawSome = async (address) => {
+  const onClickWithdrawSome = async (amount) => {
     //we need to make sure we have the found, its superior to 0
     //update the contract balance
+
+    const result: any = await withdrawSome(amount);
+    if (result.status == true) {
+      onClose(); // close modal
+    } else {
+      setError(result?.error);
+    }
   };
 
   const displaySpecificInput = (option) => {

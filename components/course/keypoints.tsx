@@ -11,7 +11,18 @@ export default function Keypoints({ lectures }) {
   const [option, setOption] = useState<any>(null);
   const [isStopped, setIsStopped] = useState(null);
 
-  const { getOwner, getStatusContract } = useAdminFeatures();
+  const {
+    getOwner,
+    getStatusContract,
+    enableDisableStatusContract,
+    withdrawAllAndShutdown,
+  } = useAdminFeatures();
+
+  const onChangeDisableSmartContract = async () => {
+    debugger;
+    const result = await enableDisableStatusContract();
+    console.log("result", result);
+  };
 
   const displayContractFlag = () => {
     if (isStopped === null) {
@@ -22,12 +33,17 @@ export default function Keypoints({ lectures }) {
           <input
             type="checkbox"
             checked={!!isStopped}
+            onChange={onChangeDisableSmartContract}
             className="sr-only peer"
           />
           <div className="relative w-9 h-5 bg-neutral-quaternary peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-soft dark:peer-focus:ring-brand-soft rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-buffer after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
         </label>
       );
     }
+  };
+
+  const onClickShutdown = async () => {
+    await withdrawAllAndShutdown();
   };
 
   useEffect(() => {
@@ -173,36 +189,23 @@ export default function Keypoints({ lectures }) {
                       Withdraw Specific Amout & Withdraw All
                     </p>
                   </dt>
-                  <dd className="mt-2 ml-16 text-base text-gray-200">
-                    Withdraw
-                  </dd>
                 </div>
                 <div className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-red-700 text-white">
-                      <svg
-                        className="h-6 w-6"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        aria-hidden="true"
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md  text-white">
+                      <button
+                        onClick={onClickShutdown}
+                        className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
+                        <span className=" relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-base group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
+                          S
+                        </span>
+                      </button>
                     </div>
                     <p className="ml-16 text-lg leading-6 font-medium text-white-900">
                       Shutdown Smart Contract and Withdraw all
                     </p>
                   </dt>
-                  <dd className="mt-2 ml-16 text-base text-gray-200">
-                    shutdown
-                  </dd>
                 </div>
               </dl>
             </div>
