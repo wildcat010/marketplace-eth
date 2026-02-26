@@ -8,6 +8,7 @@ export function usePurchase() {
   const purchaseCourse = async (course, email) => {
     try {
       const result = await hooks.useAccount(); // call the async function
+      const isStopped = await contract.methods.isStopped().call();
 
       let hexCourseId = web3.utils.utf8ToHex(course.id);
       hexCourseId = hexCourseId.padEnd(34, "0"); // 0x + 32 chars
@@ -26,12 +27,14 @@ export function usePurchase() {
 
       const value = web3.utils.toWei("0.01", "ether");
 
-      await contract.methods
-        .purchaseCourse(hexCourseId, proof, emailHash)
-        .send({
-          from: result.account[0],
-          value,
-        });
+      if (isStopped) {
+        await contract.methods
+          .purchaseCourse(hexCourseId, proof, emailHash)
+          .send({
+            from: result.account[0],
+            value,
+          });
+      }
     } catch (err) {
       console.error("Purchase failed:", err);
       throw err;
