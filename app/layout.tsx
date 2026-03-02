@@ -35,14 +35,10 @@ export default function RootLayout({
         <Web3Provider>
           <div className="  overflow-hidden">
             <div className="relative max-w-7xl mx-auto px-4">
-              {/*------ NAVBAR STARTS ------*/}
               <Navbar></Navbar>
-              {/*------ NAVBAR ENDS ------*/}
               <div className="fit">{children}</div>
             </div>
-            {/*------ FOOTER STARTS ------*/}
             <Footer></Footer>
-            {/*------ FOOTER ENDS ------*/}
           </div>
         </Web3Provider>
       </body>

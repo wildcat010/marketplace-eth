@@ -20,8 +20,6 @@ export default function Modal({ course, onClose }) {
     }
     try {
       const tx = await purchaseCourse(course, email);
-      console.log("Transaction Success", tx);
-
       onClose(); // close modal
     } catch (err) {
       setEmail("");

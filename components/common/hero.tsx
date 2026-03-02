@@ -14,7 +14,6 @@ export default function Hero() {
       const network = await hooks.useNetwork(); // call the async function
 
       if (network && network.network) {
-        console.log("network", network);
         setNetwork(network.network);
         setIsValidNetwork(network.isValidNetwork);
       }

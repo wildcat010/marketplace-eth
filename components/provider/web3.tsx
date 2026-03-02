@@ -25,18 +25,12 @@ export default function Web3Provider({ children }) {
       let provider: any = await detectEthereumProvider();
 
       if (provider) {
-        console.log("provider find", provider);
-
         let web3: any = new Web3(provider);
 
         // Wait until provider is ready to get chainId
         const chainId = (await web3.eth.getChainId()).toString();
 
-        console.log("chainId", chainId);
-
         const contract = await loadContract("CourseMarketplace", web3, chainId);
-
-        console.log("chainId", contract);
 
         setWeb3Api({ provider, web3, contract, isLoading: false });
 
@@ -46,8 +40,7 @@ export default function Web3Provider({ children }) {
         });
 
         provider.on("chainChanged", async (_chainId: string) => {
-          console.log("chain changed");
-          //window.location.reload(); // reload if network changes
+          window.location.reload(); // reload if network changes
         });
       } else {
         console.log("fallback");

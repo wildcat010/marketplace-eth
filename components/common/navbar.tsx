@@ -54,7 +54,7 @@ export default function Navbar() {
                 href="/course"
                 className="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0"
               >
-                Courses
+                Admin
               </Link>
             </li>
           </ul>

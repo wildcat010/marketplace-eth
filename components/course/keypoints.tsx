@@ -20,10 +20,7 @@ export default function Keypoints({ lectures }) {
   } = useAdminFeatures();
 
   const onChangeDisableSmartContract = async () => {
-    debugger;
     const result: any = await enableDisableStatusContract();
-    console.log("result", result);
-
     if (result.status == true) {
       setIsStopped(result.stopped);
     } else {
