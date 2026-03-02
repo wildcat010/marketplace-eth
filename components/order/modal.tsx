@@ -5,6 +5,7 @@ import { usePurchase } from "./usePurchase";
 export default function Modal({ course, onClose }) {
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { purchaseCourse } = usePurchase();
 
@@ -19,7 +20,7 @@ export default function Modal({ course, onClose }) {
       return;
     }
     try {
-      const tx = await purchaseCourse(course, email);
+      const tx = await purchaseCourse(course, email, setLoading);
       onClose(); // close modal
     } catch (err) {
       setEmail("");
@@ -86,10 +87,32 @@ export default function Modal({ course, onClose }) {
         <div className="bg-gray-700 px-6 py-4 flex justify-end gap-3">
           <button
             onClick={handlePurchase}
-            disabled={!isValid}
-            className="text-white bg-gradient-to-br  from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand"
+            disabled={!isValid || loading}
+            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl font-medium rounded-base text-sm px-4 py-2.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-brand flex items-center justify-center gap-2"
           >
-            Purchase
+            {loading && (
+              <svg
+                className="animate-spin h-4 w-4 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            )}
+            <span>{loading ? "Processing..." : "Purchase"}</span>
           </button>
           <button
             onClick={onClose}

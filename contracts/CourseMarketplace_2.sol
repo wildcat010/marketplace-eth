@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity >=0.4.22 <0.9.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract CourseMarketplace is Ownable, ReentrancyGuard {
+contract CourseMarketplaceZep is Ownable, ReentrancyGuard {
 
     enum State { Purchased, Activated, Deactivated }
 
@@ -29,7 +29,6 @@ contract CourseMarketplace is Ownable, ReentrancyGuard {
     event CoursePurchased(address indexed buyer, bytes16 indexed courseId, uint price);
     event ContractStopped(address indexed by);
     event ContractResumed(address indexed by);
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event Withdraw(address indexed to, uint amount);
     event Shutdown(address indexed owner, uint amount);
 
@@ -40,7 +39,9 @@ contract CourseMarketplace is Ownable, ReentrancyGuard {
 
     error HasOwnership();
 
-    constructor() {}
+    constructor() {
+        _transferOwnership(msg.sender);
+    }
 
     // =========================
     // CONTRACT CONTROL

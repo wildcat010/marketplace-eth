@@ -21,9 +21,11 @@ export default function Keypoints({ lectures }) {
 
   const onChangeDisableSmartContract = async () => {
     const result: any = await enableDisableStatusContract();
+    debugger;
     if (result.status == true) {
       setIsStopped(result.stopped);
     } else {
+      setIsStopped(result.stopped);
     }
   };
 

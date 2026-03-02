@@ -32,14 +32,16 @@ export function useAdminFeatures() {
       const result = await hooks.useAccount();
       const isStopped = await contract.methods.isStopped().call();
       if (!isStopped) {
-        await contract.methods.stopContract().send({ from: result.account[0] });
+        const isStopped = await contract.methods
+          .stopContract()
+          .send({ from: result.account[0] });
       } else {
-        await contract.methods
+        const isStopped = await contract.methods
           .resumeContract()
           .send({ from: result.account[0] });
       }
       const updatedStatus = await contract.methods.isStopped().call();
-      return { status: true, stoped: updatedStatus };
+      return { status: true, stopped: updatedStatus };
     } catch (e: any) {
       return { status: false, error: e?.error.message };
     }

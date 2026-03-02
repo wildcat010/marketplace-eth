@@ -5,7 +5,8 @@ import { useWeb3 } from "@components/provider/web3";
 export function usePurchase() {
   const { web3, contract, hooks } = useWeb3();
 
-  const purchaseCourse = async (course, email) => {
+  const purchaseCourse = async (course, email, setLoading) => {
+    setLoading(true);
     try {
       const result = await hooks.useAccount(); // call the async function
       const isStopped = await contract.methods.isStopped().call();
@@ -27,17 +28,22 @@ export function usePurchase() {
 
       const value = web3.utils.toWei("0.01", "ether");
 
-      if (isStopped) {
-        await contract.methods
+      if (!isStopped) {
+        const receipt = await contract.methods
           .purchaseCourse(hexCourseId, proof, emailHash)
           .send({
             from: result.account[0],
             value,
           });
+        setLoading(false);
+      } else {
+        setLoading(false);
+        alert("Contract is stopped");
+        throw new Error("Contract is stopped");
       }
     } catch (err) {
       console.error("Purchase failed:", err);
-      throw err;
+      setLoading(false);
     }
   };
 
