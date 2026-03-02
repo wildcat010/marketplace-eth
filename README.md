@@ -11,8 +11,10 @@
 
 ### **Frontend**
 
-- **Next.js (React 18)**
+- **Next.js (React 19)**
 - **Web3.js**
+- **Zustand**
+- **@metamask/detect-provider**
 
 ### **Tools**
 
