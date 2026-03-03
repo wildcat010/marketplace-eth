@@ -49,7 +49,6 @@ export function useAdminFeatures() {
 
   const withdrawSome = async (amount) => {
     try {
-      debugger;
       const balanceWeiStr = await web3.eth.getBalance(contract.options.address);
       const balanceWei = BigInt(balanceWeiStr);
 
@@ -70,7 +69,6 @@ export function useAdminFeatures() {
   };
 
   const withdrawAllAndShutdown = async () => {
-    debugger;
     try {
       const result = await hooks.useAccount();
 

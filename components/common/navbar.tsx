@@ -9,9 +9,6 @@ export default function Navbar() {
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <img src="/globe.svg" className="h-7" alt="Logo" />
-          <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
-            Flowbite
-          </span>
         </Link>
         <button
           data-collapse-toggle="navbar-default"
@@ -51,7 +48,7 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                href="/course"
+                href="/admin"
                 className="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0"
               >
                 Admin
